@@ -13,6 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REVIEW
+ * 문제: url 가독성
+ * 원인: 공통적으로 포함된 /product 부분
+ * 개선안: @RequestMapping의 value 속성에 공통 경로인 /product 추가
+ *      각 메서드의 매핑 경로에서 /product 제거
+ */
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
@@ -49,6 +56,12 @@ public class ProductController {
         return ResponseEntity.ok(new ProductListResponse(productList.getContent(), productList.getTotalPages(), productList.getTotalElements(), productList.getNumber()));
     }
 
+    /**
+     * REVIEW
+     * 문제: Controller 메소드명 가독성 저하
+     * 원인: getProductListByCategory 라는 메소드명이 실제 기능과 맞지 않음
+     * 개선안: 실제 기능은 Category 목록을 조회하는 것이므로 getCategoryList 와 같은 명확한 메소드명으로 변경이 필요
+     */
     @GetMapping(value = "/product/category/list")
     public ResponseEntity<List<String>> getProductListByCategory(){
         List<String> uniqueCategories = productService.getUniqueCategories();
