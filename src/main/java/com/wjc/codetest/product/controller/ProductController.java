@@ -15,10 +15,14 @@ import java.util.List;
 
 /**
  * REVIEW
- * 문제: url 가독성
- * 원인: 공통적으로 포함된 /product 부분
- * 개선안: @RequestMapping의 value 속성에 공통 경로인 /product 추가
+ * 문제: 동사 중심 URL로 인해 REST API 일관성이 떨어지고 유지보수성이 낮음
+ * 원인: 각 API가 /get, /create, /delete, /update 등 행위를 URL에 포함
+ *      공통적으로 포함된 /product 경로를 매핑 경로마다 반복
+ * 개선안: @RequestMapping("/product") 로 공통 경로 지정
  *      각 메서드의 매핑 경로에서 /product 제거
+ * 
+ *      동사 형태의 경로 대신 HTTP 메서드로 행위를 표현하여 RESTful API 설계 원칙 준수
+ *      ex) /delete/product/{productId} -> DELETE /{productId}
  */
 @RestController
 @RequestMapping
@@ -58,7 +62,7 @@ public class ProductController {
 
     /**
      * REVIEW
-     * 문제: Controller 메소드명 가독성 저하
+     * 문제: 메소드명이 실제 기능과 불일치하여 가독성 저하
      * 원인: getProductListByCategory 라는 메소드명이 실제 기능과 맞지 않음
      * 개선안: 실제 기능은 Category 목록을 조회하는 것이므로 getCategoryList 와 같은 명확한 메소드명으로 변경이 필요
      */
